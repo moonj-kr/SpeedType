@@ -1,11 +1,3 @@
-- typing level difficulty
-        - how to make it difficult
-- word storage > maybe import from outside
-- typing on window screen of GUI
-- words falling down on screen
-
-1. Read from file and display word on a GUI window
-2. Get GUI window to take in text from user
-3. Result from user input -> get words to disappear
-4. Make the word "fall" down the screen
-5. cont.
+- add exit
+- showing output faster
+-
