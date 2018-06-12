@@ -1,7 +1,9 @@
 problems? potential fixing
 - add exit
 - showing output faster
-- flickering once words go fast
+- flickering (due to speed)
 
 goals
 - display level
+- every time the level is supposed to change, replace to black screen
+
