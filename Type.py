@@ -82,7 +82,6 @@ def setDifficulty(level):
 
 #sets levels according to the score
 def set_level(current_score):
-    print(current_score)
     if current_score<20:
         level=1
     elif current_score>=20 and current_score<50:
