@@ -140,8 +140,8 @@ def display(text, current_score,level):
                             gameDisplay.fill((0, 0, 0), TextRect)
                             return current_score
         add_value = setDifficulty(level)
-        y=y+add_value
-        time.sleep(0.5)
+        y=y+1
+        time.sleep(0.001)
         clock.tick(120)
 
 
