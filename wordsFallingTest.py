@@ -1,5 +1,7 @@
 import pygame, time, random
 from pygame.locals import *
+
+import eztext
 from Type import text_objects
 
 
@@ -47,13 +49,13 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 # fn that shows user input
-def show_input(value):
-    pygame.draw.rect(window, (255, 255, 255), ((100, 735), (250, 30)))
-    text = pygame.font.SysFont("Times New Roman", 20)
-    sur, rec = window(value, text)
-    window.blit(sur, (120,740))
-    pygame.display.update()
 
+def show_input(events):
+    textbox.set_pos(105, 740)
+    textbox.update(events)
+    pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+    textbox.draw(window)
+    pygame.display.flip()
 
 ################ Window Setup ###################
 
@@ -64,6 +66,9 @@ text_surface = font.render(word, False, white)
 window = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption("Speed Type")
 clock = pygame.time.Clock()
+pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+pygame.display.update()
+textbox = eztext.Input(maxlength=70, color=(black), prompt='')
 
 ################ Game Loop ###################
 def game_loop():
@@ -74,9 +79,11 @@ def game_loop():
     current_score=0
     word = return_word()
     text_surface = font.render(word, False, white)
+
     while crashed == False:
+        events = pygame.event.get()
         word_display(text_surface, x, word_height)
-        for event in pygame.event.get():
+        for event in events:
             # window exiting
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -85,10 +92,8 @@ def game_loop():
             if event.type == pygame.KEYDOWN:
                 if event.unicode.isalpha():
                     input_word += event.unicode
-                    # show_input(input_word)
                 elif event.key == pygame.K_BACKSPACE:
                     input_word = input_word[:-1]
-                    # show_input(input_word)
                 if(event.key==pygame.K_RETURN):
                     if input_word!=word :
                         print("failed, your score is :", current_score)
@@ -107,11 +112,13 @@ def game_loop():
                             x = random.randint(50, 950)
                             input_word = ""
                             word_height = 0
-                            # window.fill((0, 0, 0), TextRect)
+                           # window.fill((0, 0, 0), TextRect)
+
                             continue
         # update window
+        show_input(events)
         pygame.display.update()
-        word_height += 1
+        word_height += 0.25
 
         # bordery
         if word_height > 690:
