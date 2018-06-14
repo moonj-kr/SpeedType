@@ -1,6 +1,6 @@
-import pygame, time, random
+import pygame, time, random, eztext
 from pygame.locals import *
-from Type import text_objects
+from ScrapTestFiles.Type import text_objects
 
 pygame.init()
 
@@ -10,6 +10,8 @@ display_width = 1000
 display_height = 800
 black = (0,0,0)
 white = (255, 255, 255)
+
+textbox = eztext.Input(maxlength = 70, color = white, prompt ="")
 
 # fn to read file of words
 def read_file():
@@ -53,7 +55,11 @@ def text_objects(text, font):
 
 # fn that shows user input
 def show_input(value):
-    pass
+    pygame.draw.rect(window, (255, 255, 255), ((100, 735), (250, 30)))
+    text = pygame.font.SysFont("Times New Roman", 20)
+    sur, rec = window(value, text)
+    window.blit(sur, (120,740))
+    pygame.display.update()
 
 # fn that shows player's current level
 def show_level():
@@ -78,10 +84,15 @@ def game_loop():
     word_height = 0
     crashed = False
 
+
     while crashed == False:
         for event in pygame.event.get():
             # keep track of events
             print(event)
+            events = pygame.event.get()
+            textbox.update(events)
+            textbox.draw(window)
+            print("this")
 
             # window exiting
             if event.type == pygame.QUIT:
@@ -96,7 +107,7 @@ def game_loop():
                     name = name[:-1]
                 elif event.key == K_RETURN:
                     name = ""
-                print(name)
+                show_input(name)
 
         # word display
         word_display(text_surface,display_width/2,word_height)
