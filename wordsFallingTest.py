@@ -1,9 +1,5 @@
-import pygame, time, random
-from pygame.locals import *
-
-import eztext
-from Type import text_objects
-
+import pygame, time, random, eztext
+from ScrapTestFiles.Type import text_objects
 
 pygame.init()
 
@@ -13,6 +9,7 @@ display_width = 1000
 display_height = 800
 black = (0,0,0)
 white = (255, 255, 255)
+green = (0,100,0)
 
 # fn to read file of words
 def read_file():
@@ -49,11 +46,19 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 # fn that shows user input
-
 def show_input(events):
     textbox.set_pos(105, 740)
     textbox.update(events)
-    pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+    pygame.draw.rect(window, white, ((100, 735), (250, 30))) # input box!!
+    textbox.draw(window)
+    pygame.display.flip()
+
+
+# fn that shows user input
+def show_input_more(events, textbox):
+    textbox.set_pos(105, 740)
+    textbox.update(events)
+    pygame.draw.rect(window, white, ((100, 735), (250, 30))) # input box!!
     textbox.draw(window)
     pygame.display.flip()
 
@@ -108,12 +113,15 @@ def game_loop():
                             print("success")
                             current_score= current_score + len(word)
                             word = return_word()
-                            text_surface = font.render(word, False, white)
+                            text_surface = font.render(word, False, white) # falling words
+
+                            textbox = eztext.Input(maxlength=70, color=(black), prompt='')
+                            # clear window
+                            # reset eztext
+
                             x = random.randint(50, 950)
                             input_word = ""
                             word_height = 0
-                           # window.fill((0, 0, 0), TextRect)
-
                             continue
         # update window
         show_input(events)
@@ -127,6 +135,9 @@ def game_loop():
             TextSurf, TextRect = text_objects("You've crashed", largeText)
             TextRect.center = (display_width / 2, display_height / 2)
             window.blit(TextSurf, TextRect)
+
+            pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+
             pygame.display.update()
             time.sleep(0.01)
             pygame.quit()

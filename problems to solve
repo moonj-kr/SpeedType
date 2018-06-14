@@ -2,8 +2,11 @@ problems? potential fixing
 - add exit
 - showing output faster
 - flickering (due to speed)
-
-goals
 - display level
 - every time the level is supposed to change, replace to black screen
+- min/max button for window
 
+June 15:
+- Ran into problems while implementing Eztext :
+    - deleting words sometimes delete more than one letter
+    - resetting eztext for the next word
