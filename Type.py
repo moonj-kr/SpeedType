@@ -115,7 +115,7 @@ def display(text, current_score,level):
         score_Board(current_score)
         TextRect.center = (x, y)
         gameDisplay.blit(TextSurf, TextRect)
-        pygame.draw.line(gameDisplay, (0, 0, 255), (0, 700), (800, 700), 4)
+        # /pygame.draw.line(gameDisplay, (0, 0, 255), (0, 700), (800, 700), 4)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -145,7 +145,7 @@ def display(text, current_score,level):
                             return current_score
         add_value = setDifficulty(level)
         y=y+add_value
-        time.sleep(0.5)
+        time.sleep(1)
         clock.tick(120)
 
 
@@ -164,6 +164,7 @@ if __name__ == '__main__':
         word = returnWord()
         pygame.draw.line(gameDisplay, (0, 0, 255), (0, 700), (800, 700), 4)
         current_score=display(word, current_score,level)
+
         if current_score==None:
             pygame.quit()
             quit()

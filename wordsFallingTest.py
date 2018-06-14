@@ -2,6 +2,7 @@ import pygame, time, random
 from pygame.locals import *
 from Type import text_objects
 
+
 pygame.init()
 
 # variables
@@ -28,6 +29,7 @@ def return_word():
 # fn that displays words
 def word_display(word,x,y):
     window.fill(black)
+    pygame.draw.line(window, (0, 0, 255), (0, 700), (1000, 700), 4)
     window.blit(word,(x,y))
 
 # fn that shows text to player
@@ -57,42 +59,69 @@ def show_input(value):
 
 # window setup
 font = pygame.font.SysFont("Veranda", 30)
-text_surface = font.render(return_word(), False, white)
+word=return_word()
+text_surface = font.render(word, False, white)
 window = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption("Speed Type")
 clock = pygame.time.Clock()
 
 ################ Game Loop ###################
 def game_loop():
-    name = ""
+    input_word = ""
     word_height = 0
     crashed = False
-
-
+    x = random.randint(50, 950)
+    current_score=0
+    word = return_word()
+    text_surface = font.render(word, False, white)
     while crashed == False:
+        word_display(text_surface, x, word_height)
         for event in pygame.event.get():
-
             # window exiting
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
         # word display
-        word_display(text_surface,display_width/2,word_height)
-
+            if event.type == pygame.KEYDOWN:
+                if event.unicode.isalpha():
+                    input_word += event.unicode
+                    # show_input(input_word)
+                elif event.key == pygame.K_BACKSPACE:
+                    input_word = input_word[:-1]
+                    # show_input(input_word)
+                if(event.key==pygame.K_RETURN):
+                    if input_word!=word :
+                        print("failed, your score is :", current_score)
+                        pygame.quit()
+                        quit()
+                    else:
+                        if len(lst) == 0:
+                            print("Congrats, you have finished the game")
+                            pygame.quit()
+                            quit()
+                        else:
+                            print("success")
+                            current_score= current_score + len(word)
+                            word = return_word()
+                            text_surface = font.render(word, False, white)
+                            x = random.randint(50, 950)
+                            input_word = ""
+                            word_height = 0
+                            # window.fill((0, 0, 0), TextRect)
+                            continue
         # update window
         pygame.display.update()
-        word_height += 0.25
+        word_height += 1
 
-        # border
-        if word_height > 700:
+        # bordery
+        if word_height > 690:
             print("You've crashed")
             largeText = pygame.font.Font("freesansbold.ttf", 115)
             TextSurf, TextRect = text_objects("You've crashed", largeText)
             TextRect.center = (display_width / 2, display_height / 2)
             window.blit(TextSurf, TextRect)
             pygame.display.update()
-            time.sleep(2)
+            time.sleep(0.01)
             pygame.quit()
             quit()
 
