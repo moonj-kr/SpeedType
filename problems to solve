@@ -10,3 +10,15 @@ June 15:
 - Ran into problems while implementing Eztext :
     - deleting words sometimes delete more than one letter
     - resetting eztext for the next word
+
+June 17:
+- Fixed extext
+- Maybe find fix to min/max??
+- Plan (Bunnies?? or Pirate SHIP?)
+    - Score (top)
+    - Input box decoration
+    - Levels
+    - Border design
+    - Difficulty tab bar (easy, medium, hard)
+        - number of words on the screen
+    - After word is typed, words become carrots and explode?
