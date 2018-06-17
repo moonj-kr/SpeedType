@@ -52,15 +52,15 @@ class Input:
 
     def update(self, events):
         """ Update the input based on passed events """
-        pressed = pygame.key.get_pressed() ##add ability to hold down delete key and delete text
-        if self.pause == 3 and pressed[K_BACKSPACE]:
-            self.pause = 0
-            self.value = self.value[:-1]
-        elif pressed [K_BACKSPACE]:
-            self.pause += 1
-        else:
-            self.pause = 0
-        self.anyThing = ""
+        #pressed = pygame.key.get_pressed() ##add ability to hold down delete key and delete text
+        #if self.pause == 3 and pressed[K_BACKSPACE]:
+        #    self.pause = 0
+        #    self.value = self.value[:-1]
+        #elif pressed [K_BACKSPACE]:
+        #    self.pause += 1
+        #else:
+        #    self.pause = 0
+        #self.anyThing = ""
         for event in events:
             if event.type == KEYUP:
                 if event.key == K_LSHIFT or event.key == K_RSHIFT: self.shifted = False
