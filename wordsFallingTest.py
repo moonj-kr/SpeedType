@@ -122,6 +122,7 @@ def game_loop():
                             x = random.randint(50, 950)
                             input_word = ""
                             word_height = 0
+                            #time.sleep(0.5)
                             continue
         # update window
         show_input(events)
