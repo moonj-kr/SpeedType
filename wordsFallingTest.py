@@ -74,9 +74,9 @@ def game_loop():
     crashed = False
     global display_width
     global display_height
-    global multiplier
+
     # display_width = 1000
-    h=display_height
+
     word_width = random.randint(50, display_width//1.05)
     current_score=0
     word = return_word()
@@ -127,8 +127,7 @@ def game_loop():
         # update window
         show_input(events)
         pygame.display.update()
-        print(display_height)
-        print(h)
+
         word_height += 1
         time.sleep(0.01)
 
