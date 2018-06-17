@@ -7,16 +7,16 @@ pygame.init()
 lst = []
 display_width = 1000
 display_height = 800
-black = (0,0,0)
-white = (255, 255, 255)
-green = (0,100,0)
-
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 100, 0)
+RED=(255, 0, 0)
+BLUE=(0, 0, 255)
 # fn to read file of words
 def read_file():
     file = open("Wordlist.txt", "r")
     lines = file.readlines()
     file.close()
-
     for line in lines:
         lst.append(line.strip())
 
@@ -27,29 +27,20 @@ def return_word():
 
 # fn that displays words
 def word_display(word,x,y):
-    window.fill(black)
-    pygame.draw.line(window, (0, 0, 255), (0, 700), (1000, 700), 4)
+    window.fill(BLACK)
+    pygame.draw.line(window, BLUE, (0, display_height/1.2), (display_width, display_height/1.2), 4)
     window.blit(word,(x,y))
 
-# fn that shows text to player
-def message_display(text):
-    largeText = pygame.font.Font("freesansbold.ttf", 115)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (display_width/2 , display_height/2)
-    window.blit(TextSurf, TextRect)
-    pygame.display.update()
-    time.sleep(2)
-    game_loop()
 
 def text_objects(text, font):
-    textSurface = font.render(text,True, white)
+    textSurface = font.render(text, True, WHITE)
     return textSurface, textSurface.get_rect()
 
 # fn that shows user input
 def show_input(events):
     textbox.set_pos(105, 740)
     textbox.update(events)
-    pygame.draw.rect(window, white, ((100, 735), (250, 30))) # input box!!
+    pygame.draw.rect(window, WHITE, ((display_width/10, display_height / 1.1), (display_width/3, 35))) # input box!!
     textbox.draw(window)
     pygame.display.flip()
 
@@ -58,7 +49,7 @@ def show_input(events):
 def show_input_more(events, textbox):
     textbox.set_pos(105, 740)
     textbox.update(events)
-    pygame.draw.rect(window, white, ((100, 735), (250, 30))) # input box!!
+    pygame.draw.rect(window, WHITE, ((display_width / 10, display_height / 1.1), (display_width / 3, 35))) # input box!!
     textbox.draw(window)
     pygame.display.flip()
 
@@ -67,27 +58,27 @@ def show_input_more(events, textbox):
 # window setup
 font = pygame.font.SysFont("Veranda", 30)
 word=return_word()
-text_surface = font.render(word, False, white)
-window = pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption("Speed Type")
+text_surface = font.render(word, False, WHITE)
+window = pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
+pygame.display.set_caption("Type the hella outta me")
 clock = pygame.time.Clock()
-pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+pygame.draw.rect(window, WHITE, ((display_width/10, display_height / 1.1), (display_width/3, 35)))
 pygame.display.update()
-textbox = eztext.Input(maxlength=70, color=(black), prompt='')
+textbox = eztext.Input(maxlength=70, color=(BLACK), prompt='')
 
 ################ Game Loop ###################
 def game_loop():
     input_word = ""
     word_height = 0
     crashed = False
-    x = random.randint(50, 950)
+    word_width = random.randint(50, display_width//1.05)
     current_score=0
     word = return_word()
-    text_surface = font.render(word, False, white)
+    text_surface = font.render(word, False, WHITE)
 
     while crashed == False:
         events = pygame.event.get()
-        word_display(text_surface, x, word_height)
+        word_display(text_surface, word_width, word_height)
         for event in events:
             # window exiting
             if event.type == pygame.QUIT:
@@ -113,13 +104,13 @@ def game_loop():
                             print("success")
                             current_score= current_score + len(word)
                             word = return_word()
-                            text_surface = font.render(word, False, white) # falling words
+                            text_surface = font.render(word, False, WHITE) # falling words
 
-                            textbox = eztext.Input(maxlength=70, color=(black), prompt='')
+                            textbox = eztext.Input(maxlength=70, color=(BLACK), prompt='')
                             # clear window
                             # reset eztext
 
-                            x = random.randint(50, 950)
+                            word_width = random.randint(50, 950)
                             input_word = ""
                             word_height = 0
                             #time.sleep(0.5)
@@ -130,14 +121,14 @@ def game_loop():
         word_height += 0.25
 
         # bordery
-        if word_height > 690:
+        if word_height > (display_height/1.2) -10:
             print("You've crashed")
             largeText = pygame.font.Font("freesansbold.ttf", 115)
             TextSurf, TextRect = text_objects("You've crashed", largeText)
             TextRect.center = (display_width / 2, display_height / 2)
             window.blit(TextSurf, TextRect)
 
-            pygame.draw.rect(window, white, ((100, 735), (250, 30)))
+            pygame.draw.rect(window, WHITE, ((display_width / 10, display_height / 1.1), (display_width / 3, 35)))
 
             pygame.display.update()
             time.sleep(0.01)
