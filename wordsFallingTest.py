@@ -12,6 +12,7 @@ WHITE = (255, 255, 255)
 GREEN = (0, 100, 0)
 RED=(255, 0, 0)
 BLUE=(0, 0, 255)
+
 # fn to read file of words
 def read_file():
     file = open("Wordlist.txt", "r")
@@ -38,7 +39,7 @@ def text_objects(text, font):
 
 # fn that shows user input
 def show_input(events):
-    textbox.set_pos(105, 740)
+    textbox.set_pos(display_width / 9.5, display_height / 1.09)
     textbox.update(events)
     pygame.draw.rect(window, WHITE, ((display_width/10, display_height / 1.1), (display_width/3, 35))) # input box!!
     textbox.draw(window)
@@ -47,7 +48,7 @@ def show_input(events):
 
 # fn that shows user input
 def show_input_more(events, textbox):
-    textbox.set_pos(105, 740)
+    textbox.set_pos(display_width/9.5, display_height/1.08)
     textbox.update(events)
     pygame.draw.rect(window, WHITE, ((display_width / 10, display_height / 1.1), (display_width / 3, 35))) # input box!!
     textbox.draw(window)
@@ -71,6 +72,11 @@ def game_loop():
     input_word = ""
     word_height = 0
     crashed = False
+    global display_width
+    global display_height
+    global multiplier
+    # display_width = 1000
+    h=display_height
     word_width = random.randint(50, display_width//1.05)
     current_score=0
     word = return_word()
@@ -84,6 +90,9 @@ def game_loop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type==pygame.VIDEORESIZE:
+                display_width, display_height = event.w, event.h
+                pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
         # word display
             if event.type == pygame.KEYDOWN:
                 if event.unicode.isalpha():
@@ -110,7 +119,7 @@ def game_loop():
                             # clear window
                             # reset eztext
 
-                            word_width = random.randint(50, 950)
+                            word_width = random.randint(50, display_width//1.05)
                             input_word = ""
                             word_height = 0
                             #time.sleep(0.5)
@@ -118,7 +127,10 @@ def game_loop():
         # update window
         show_input(events)
         pygame.display.update()
-        word_height += 0.25
+        print(display_height)
+        print(h)
+        word_height += 1
+        time.sleep(0.01)
 
         # bordery
         if word_height > (display_height/1.2) -10:
