@@ -32,7 +32,6 @@ def word_display(word,x,y):
     pygame.draw.line(window, BLUE, (0, display_height/1.2), (display_width, display_height/1.2), 4)
     window.blit(word,(x,y))
 
-
 def text_objects(text, font):
     textSurface = font.render(text, True, WHITE)
     return textSurface, textSurface.get_rect()
