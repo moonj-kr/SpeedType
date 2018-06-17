@@ -31,7 +31,7 @@ class Input:
         self.shifted = False
         self.anyThing = ""
         self.pause = 0
-                    
+
 
     def set_pos(self, x, y):
         """ Set the position to x, y """
@@ -46,6 +46,9 @@ class Input:
         """ Draw the text input to a surface """
         text = self.font.render(self.prompt+self.value, 1, self.color)
         surface.blit(text, (self.x, self.y))
+
+    def reset(self):
+        self.value = ""
 
     def update(self, events):
         """ Update the input based on passed events """
@@ -65,10 +68,17 @@ class Input:
                 if event.key == K_BACKSPACE: self.value = self.value[:-1]
                 elif event.key == K_LSHIFT or event.key == K_RSHIFT: self.shifted = True
                 #elif event.key == K_SPACE: self.value += ' '
-                if event.key == K_SPACE:
+                elif event.key == K_SPACE:
                     self.anyThing = self.value
                     #print(self.anyThing)
-                
+                elif event.key == K_RETURN:
+                    self.value = ""
+                    #self.value += '???????????????????'
+                    #self.value = self.value[:-1]
+                    #while self.value != "":
+                    #    self.value = ""
+                    #    self.prompt = ""
+
                 if not self.shifted:
                     if event.key == K_a and 'a' in self.restricted: self.value += 'a'
                     elif event.key == K_b and 'b' in self.restricted: self.value += 'b'
@@ -117,6 +127,14 @@ class Input:
                     elif event.key == K_COMMA and ',' in self.restricted: self.value += ','
                     elif event.key == K_PERIOD and '.' in self.restricted: self.value += '.'
                     elif event.key == K_SLASH and '/' in self.restricted: self.value += '/'
+                    elif event.key == K_RETURN:
+                        self.value = ""
+                        #self.value += '???????????????????'
+                        #self.value = self.value[:-1]
+
+                        #while self.value != "":
+                        #    self.value = ""
+                        #    self.prompt = ""
                 elif self.shifted:
                     if event.key == K_a and 'A' in self.restricted: self.value += 'A'
                     elif event.key == K_b and 'B' in self.restricted: self.value += 'B'
@@ -165,6 +183,13 @@ class Input:
                     elif event.key == K_COMMA and '<' in self.restricted: self.value += '<'
                     elif event.key == K_PERIOD and '>' in self.restricted: self.value += '>'
                     elif event.key == K_SLASH and '?' in self.restricted: self.value += '?'
+                    elif event.key == K_RETURN:
+                        self.value = ""
+                        #self.value += '???????????????????'
+                        #self.value = self.value[:-1]
 
-                
+                        #while self.value != "":
+                        #    self.value = ""
+                        #    self.prompt = ""
+
         if len(self.value) > self.maxlength and self.maxlength >= 0: self.value = self.value[:-1]
