@@ -47,9 +47,12 @@ def text_objects(text, font):
 
 # fn that shows user input
 def show_input(events):
-    textbox.set_pos(display_width / 9.5, display_height / 1.09)
+    textbox.set_pos(display_width / 2.95, display_height / 1.09)
     textbox.update(events)
-    pygame.draw.rect(window, WHITE, ((display_width/10, display_height / 1.1), (display_width/3, 35))) # input box!!
+    pygame.draw.rect(window, WHITE, ((display_width/3, display_height / 1.1), (display_width/3, 35))) # input box!!
+    pygame.draw.line(window,SALMON,(display_width/3, display_height / 1.1),(display_width/3,(display_height/1.1)+35),7)
+    pygame.draw.line(window, SALMON, ((display_width / 3)*2, display_height / 1.1),((display_width / 3)*2, (display_height / 1.1) + 35), 7)
+    pygame.draw.line(window,SALMON,(display_width/3,(display_height/1.1)+35),((display_width / 3)*2,(display_height/1.1)+35),3)
     textbox.draw(window)
     pygame.display.flip()
 
