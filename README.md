@@ -1,2 +1,2 @@
 # SpeedType
-typing game 
+Not your Average 2018 Typing game 
