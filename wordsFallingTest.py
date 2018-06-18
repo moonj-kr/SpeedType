@@ -7,11 +7,16 @@ pygame.init()
 lst = []
 display_width = 1000
 display_height = 800
+h=display_height
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 100, 0)
 RED=(255, 0, 0)
 BLUE=(0, 0, 255)
+GOLD=(250,250,210)
+EMERALD=(204,255,210)
+LAVENDER=(230,230,250)
+SALMON=(220,20,60)
 
 # fn to read file of words
 def read_file():
@@ -29,6 +34,10 @@ def return_word():
 # fn that displays words
 def word_display(word,x,y):
     window.fill(BLACK)
+    pygame.draw.line(window, SALMON, (30, 0), (30, display_height / 1.2), 10)
+    pygame.draw.rect(window, GOLD, ((0, 0), (30, display_height / 1.2)))
+    pygame.draw.line(window,SALMON , (display_width-30, 0), (display_width - 30, display_height / 1.2), 10)
+    pygame.draw.rect(window,GOLD,((display_width-30,0), (30, display_height/1.2)))
     pygame.draw.line(window, BLUE, (0, display_height/1.2), (display_width, display_height/1.2), 4)
     window.blit(word,(x,y))
 
@@ -73,7 +82,6 @@ def game_loop():
     crashed = False
     global display_width
     global display_height
-
     # display_width = 1000
 
     word_width = random.randint(50, display_width//1.05)
@@ -126,7 +134,6 @@ def game_loop():
         # update window
         show_input(events)
         pygame.display.update()
-
         word_height += 1
         time.sleep(0.01)
 
