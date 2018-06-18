@@ -56,7 +56,6 @@ def show_input(events):
     textbox.draw(window)
     pygame.display.flip()
 
-
 # fn that shows user input
 def show_input_more(events, textbox):
     textbox.set_pos(display_width/9.5, display_height/1.08)
