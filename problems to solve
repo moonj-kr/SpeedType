@@ -28,3 +28,5 @@ June 17
 
 June 19:
     - Problem: words still get cut off, need to adjust numbers
+    - flickering problem once level and score box was added
+    - need to add game logic still
