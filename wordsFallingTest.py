@@ -7,7 +7,7 @@ pygame.init()
 lst = []
 display_width = 1000
 display_height = 800
-h=display_height
+w=display_width
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 100, 0)
@@ -86,7 +86,8 @@ def game_loop():
     global display_height
     # display_width = 1000
 
-    word_width = random.randint(50, display_width//1.05)
+    word_width = random.randint(50, display_width//1.11)
+    rand=word_width;
     current_score=0
     word = return_word()
     text_surface = font.render(word, False, WHITE)
@@ -102,6 +103,10 @@ def game_loop():
             if event.type==pygame.VIDEORESIZE:
                 display_width, display_height = event.w, event.h
                 pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
+                if(display_width>w):
+                    word_width=(display_width/w)*word_width
+                else:
+                    word_width=rand
         # word display
             if event.type == pygame.KEYDOWN:
                 if event.unicode.isalpha():
