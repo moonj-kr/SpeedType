@@ -173,5 +173,3 @@ if __name__ == '__main__':
             level=set_level(current_score)
         pygame.display.update()
     pygame.quit()
-
-

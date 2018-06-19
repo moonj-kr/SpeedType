@@ -31,7 +31,7 @@ def return_word():
     read_file()
     return lst.pop(random.randint(0,len(lst)))
 
-# fn that displays words
+# fn that displays game borders
 def word_display(word,x,y):
     window.fill(BLACK)
     pygame.draw.line(window, SALMON, (30, 0), (30, display_height / 1.2), 10)
@@ -40,10 +40,6 @@ def word_display(word,x,y):
     pygame.draw.rect(window,GOLD,((display_width-30,0), (30, display_height/1.2)))
     pygame.draw.line(window, BLUE, (0, display_height/1.2), (display_width, display_height/1.2), 4)
     window.blit(word,(x,y))
-
-def text_objects(text, font):
-    textSurface = font.render(text, True, WHITE)
-    return textSurface, textSurface.get_rect()
 
 # fn that shows user input
 def show_input(events):
@@ -56,13 +52,61 @@ def show_input(events):
     textbox.draw(window)
     pygame.display.flip()
 
-# fn that shows user input
-def show_input_more(events, textbox):
-    textbox.set_pos(display_width/9.5, display_height/1.08)
-    textbox.update(events)
-    pygame.draw.rect(window, WHITE, ((display_width / 10, display_height / 1.1), (display_width / 3, 35))) # input box!!
-    textbox.draw(window)
-    pygame.display.flip()
+#text editor that gives white color
+def text_score(text,font):
+    textSurface = font.render(text, True, (0, 0, 0))
+    return textSurface, textSurface.get_rect()
+
+#makes a box that shows the level given to the screen
+def show_level(level):
+    text = pygame.font.SysFont("Comic Sans Ms", 20)
+    sur, rec = text_objects("Level= "+str(level), text)
+    rec.center = (100, 40)
+    window.blit(sur,rec)
+    pygame.display.update()
+
+#Makes a score board and displays it
+def score_Board(value):
+    text=pygame.font.SysFont("Comic Sans Ms", 20)
+    sur,rec=text_objects("Score: ",text)
+    rec.center=(830,40)
+    window.blit(sur,rec)
+    pygame.draw.rect(window,(255,255,255),((865,28),(70,30)),2)
+    score=pygame.font.SysFont("Arial,20",20)
+    sur1,rec1=text_score(str(value),score)
+    rec1.center=(900,910)
+    window.blit(sur1,rec1)
+
+#method that returns the dropping points for each level
+def setDifficulty(level):
+    if level==1:
+        return 10
+    elif level==2:
+        return 20
+    elif level==3:
+        return 30
+    elif level==4:
+        return 40
+    elif level==5:
+        return 50
+    else:
+        return 60
+
+#sets levels according to the score
+def set_level(current_score):
+    if current_score<20:
+        level=1
+    elif current_score>=20 and current_score<50:
+        level=2
+    elif current_score>=50 and current_score<100:
+        level=3
+    elif current_score>=100 and current_score<150:
+        level=4
+    elif current_score>=150 and current_score<200:
+        level=5
+    else:
+        level="max"
+    return level
 
 ################ Window Setup ###################
 
@@ -84,22 +128,26 @@ def game_loop():
     crashed = False
     global display_width
     global display_height
-    # display_width = 1000
 
     word_width = random.randint(50, display_width//1.11)
-    rand=word_width;
+    rand=word_width
     current_score=0
     word = return_word()
     text_surface = font.render(word, False, WHITE)
 
+    # loop
     while crashed == False:
         events = pygame.event.get()
         word_display(text_surface, word_width, word_height)
+        score_Board(1)
+        show_level(1)
+        show_input(events)
         for event in events:
             # window exiting
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            # window min/max effect
             if event.type==pygame.VIDEORESIZE:
                 display_width, display_height = event.w, event.h
                 pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
@@ -129,17 +177,13 @@ def game_loop():
                             word = return_word()
                             text_surface = font.render(word, False, WHITE) # falling words
 
-                            textbox = eztext.Input(maxlength=70, color=(BLACK), prompt='')
-                            # clear window
-                            # reset eztext
-
                             word_width = random.randint(50, display_width//1.05)
                             input_word = ""
                             word_height = 0
-                            #time.sleep(0.5)
                             continue
+
         # update window
-        show_input(events)
+
         pygame.display.update()
         word_height += 1
         time.sleep(0.01)
