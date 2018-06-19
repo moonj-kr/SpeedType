@@ -17,6 +17,7 @@ GOLD=(250,250,210)
 EMERALD=(204,255,210)
 LAVENDER=(230,230,250)
 SALMON=(220,20,60)
+GREY=(105,105,105)
 
 # fn to read file of words
 def read_file():
@@ -108,6 +109,10 @@ def set_level(current_score):
         level="max"
     return level
 
+def message(msg,size):
+    largeText = pygame.font.Font("freesansbold.ttf", size)
+    TextSurf, TextRect = text_objects(msg, largeText)
+    return TextSurf,TextRect
 ################ Window Setup ###################
 
 # window setup
@@ -117,7 +122,6 @@ text_surface = font.render(word, False, WHITE)
 window = pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
 pygame.display.set_caption("Type the hella outta me")
 clock = pygame.time.Clock()
-pygame.draw.rect(window, WHITE, ((display_width/10, display_height / 1.1), (display_width/3, 35)))
 pygame.display.update()
 textbox = eztext.Input(maxlength=70, color=(BLACK), prompt='')
 
@@ -206,7 +210,49 @@ def game_loop():
         # fps
         clock.tick(200)
 
+def easy_mode(msg, x, y, width, height, before_hover_color, after_hover_color):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x + width > mouse[0] > x and y + height > mouse[1] > y:
+        pygame.draw.rect(window, after_hover_color, (x, y, width, height))
+
+        if click[0] == 1 :
+            game_loop()
+    else:
+        pygame.draw.rect(window, before_hover_color, (x, y, width, height))
+
+    smallText = pygame.font.SysFont("Arial", 30)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ((x + (width / 2)), (y + (height / 2)))
+    window.blit(textSurf, textRect)
+
+
+def menu_display():
+    text_surface, text_rec = message("Welcome to the Bunny Type.", 70)
+    text_rec.center = (display_width / 2, display_height / 4)
+    window.blit(text_surface, text_rec)
+    easy_mode("Easy",display_width/4,display_height/1.5,100,70,BLACK,GREY)
+    pygame.display.flip()
+
+
+def main_menu():
+    stop=False;
+    global display_height
+    global display_width
+    while not stop:
+        for event in pygame.event.get():
+            # window exiting
+            if event.type == pygame.QUIT:
+                stop=True;
+                pygame.quit()
+                quit()
+            if event.type == pygame.VIDEORESIZE:
+                display_width, display_height = event.w, event.h
+                pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
+        menu_display()
+
 if __name__ == '__main__':
+    main_menu()
     game_loop()
     pygame.quit()
     quit()
