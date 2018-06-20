@@ -19,6 +19,7 @@ LAVENDER=(230,230,250)
 SALMON=(220,20,60)
 GREY=(105,105,105)
 
+
 # fn to read file of words
 def read_file():
     file = open("Wordlist.txt", "r")
@@ -210,12 +211,12 @@ def game_loop():
         # fps
         clock.tick(200)
 
-def easy_mode(msg, x, y, width, height, before_hover_color, after_hover_color):
+
+def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         pygame.draw.rect(window, after_hover_color, (x, y, width, height))
-
         if click[0] == 1 :
             game_loop()
     else:
@@ -231,7 +232,9 @@ def menu_display():
     text_surface, text_rec = message("Welcome to the Bunny Type.", 70)
     text_rec.center = (display_width / 2, display_height / 4)
     window.blit(text_surface, text_rec)
-    easy_mode("Easy",display_width/4,display_height/1.5,100,70,BLACK,GREY)
+    mode("Learning to Type",display_width/4,display_height/1.5,200,70,BLACK,GREY)
+    mode("I can type better than you", display_width / 4, display_height / 1.3, 300, 70, BLACK, GREY)
+    mode("Bring it on", display_width / 4, display_height / 1.15, 130, 70, BLACK, GREY)
     pygame.display.flip()
 
 

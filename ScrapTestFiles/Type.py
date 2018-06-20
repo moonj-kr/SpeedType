@@ -1,7 +1,7 @@
 import pygame
 import time
 import random
-
+import timeit
 
 pygame.init()
 
@@ -107,6 +107,9 @@ def display(text, current_score,level):
     y=20
     input_word=""
     pygame.display.update()
+    a=timeit.default_timer()
+    b=timeit.default_timer()
+    print(a)
     while y<display_heght-100:
         gameDisplay.fill((0, 0, 0), TextRect)
         pygame.display.update(TextRect)
