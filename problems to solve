@@ -34,8 +34,15 @@ June 19:
 June 19:
     -Gonna work on the mainmenu for the game now.
     -I will make the noobest version of our firstpage game menu for now.
-    -Will also try to solve the flickering problem
     - Also, maybe add a "modes" tabs- that includes easy/medium/hard levels
     - and like when u click that mode tab, maybe the three different levels could be a drop down? or on a new screen?
      IDK its up the the makers imagination
      - Let me know If you're interested making this tab.
+
+
+June 20:
+    - Okay at first, the modes seems impossible to do.
+    - cuz the way we implemented our code, we were only allowed to blit and drop a single word
+    - So, to experiment, I made Harder_Modes_..... file in ScrapTestFiles.
+    - THere, I had to create a dictionary for all the words to drop down.
+    - Its not perfect yet, but its a good start I think.
