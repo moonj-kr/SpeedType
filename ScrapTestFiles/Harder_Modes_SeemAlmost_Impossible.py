@@ -1,3 +1,4 @@
+import sys
 import timeit
 
 import pygame, time, random, eztext
@@ -36,19 +37,7 @@ def return_word():
     return lst.pop(random.randint(0,len(lst)))
 
 # fn that displays game borders
-def word_display(word,x,y):
-    # window.fill(BLACK,word.get_rect())
-    pygame.draw.rect(window, BLACK, ((x, y), (word.get_width(), display_height-200)))
-    pygame.draw.line(window, SALMON, (30, 0), (30, display_height / 1.2), 10)
-    pygame.draw.rect(window, GOLD, ((0, 0), (30, display_height / 1.2)))
-    pygame.draw.line(window,SALMON , (display_width-30, 0), (display_width - 30, display_height / 1.2), 10)
-    pygame.draw.rect(window,GOLD,((display_width-30,0), (30, display_height/1.2)))
-    pygame.draw.line(window, BLUE, (0, display_height/1.2), (display_width, display_height/1.2), 4)
-    window.blit(word,(x,y))
-
-def word_display2(word):
-    # x=word[]
-    # window.fill(BLACK,word.get_rect())
+def word_display(word):
     window.fill(BLACK)
     pygame.draw.line(window, SALMON, (30, 0), (30, display_height / 1.2), 10)
     pygame.draw.rect(window, GOLD, ((0, 0), (30, display_height / 1.2)))
@@ -143,95 +132,7 @@ pygame.display.update()
 textbox = eztext.Input(maxlength=70, color=(BLACK), prompt='')
 
 ################ Game Loop ###################
-def game_loop():
-    input_word = ""
-    word_height = 0
-    crashed = False
-    global display_width
-    global display_height
-
-    word_width = random.randint(50, display_width//1.11)
-    rand=word_width
-    current_score=0
-    word = return_word()
-    text_surface = font.render(word, False, WHITE)
-    window.fill(BLACK)
-    ex=None
-    # loop
-    while crashed == False:
-        events = pygame.event.get()
-        word_display(text_surface,word_width,word_height)
-        score_Board(1)
-        show_level(1)
-        show_input(events)
-        for event in events:
-            # window exiting
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            # window min/max effect
-            if event.type==pygame.VIDEORESIZE:
-                display_width, display_height = event.w, event.h
-                pygame.display.set_mode((display_width,display_height),pygame.RESIZABLE)
-                if(display_width>w):
-                    word_width=(display_width/w)*word_width
-                else:
-                    word_width=rand
-        # word display
-            if event.type == pygame.KEYDOWN:
-                if event.unicode.isalpha():
-                    input_word += event.unicode
-                elif event.key == pygame.K_BACKSPACE:
-                    input_word = input_word[:-1]
-                if(event.key==pygame.K_RETURN):
-                    if input_word!=word :
-                        print("failed, your score is :", current_score)
-                        pygame.quit()
-                        quit()
-                    else:
-                        if len(lst) == 0:
-                            print("Congrats, you have finished the game")
-                            pygame.quit()
-                            quit()
-                        else:
-                            print("success")
-                            current_score= current_score + len(word)
-
-                            pygame.draw.rect(window, BLACK, ((word_width, word_height), (text_surface.get_width(), text_surface.get_height())))
-                            word = return_word()
-
-                            text_surface = font.render(word, False, WHITE) # falling words
-
-                            word_width = random.randint(50, display_width//1.05)
-                            input_word = ""
-                            word_height = 0
-                            continue
-
-        # update window
-
-        pygame.display.update()
-        word_height += 1
-        time.sleep(0.01)
-
-        # bordery
-        if word_height > (display_height/1.2) -10:
-            print("You've crashed")
-            largeText = pygame.font.Font("freesansbold.ttf", 115)
-            TextSurf, TextRect = text_objects("You've crashed", largeText)
-            TextRect.center = (display_width / 2, display_height / 2)
-            window.blit(TextSurf, TextRect)
-
-            pygame.draw.rect(window, WHITE, ((display_width / 10, display_height / 1.1), (display_width / 3, 35)))
-
-            pygame.display.update()
-            time.sleep(0.01)
-            pygame.quit()
-            quit()
-
-        # fps
-        clock.tick(200)
-
-def game_loop2():
+def game_loop(time_value):
     input_word = ""
     word_height = 0
     crashed = False
@@ -251,15 +152,17 @@ def game_loop2():
         events = pygame.event.get()
         b=timeit.default_timer()
         print(b-a)
-        if b-a>=4 and found==False:
+        #time difference for new word
+        if b-a>=time_value and found==False:
             new_x=random.randint(50, display_width//1.11)
             new_word=return_word()
             dct[new_word]=[new_x,0]
             found= True
         if found==True:
+            #reset time
             a=b
             found=False
-        word_display2(dct)
+        word_display(dct)
         score_Board(1)
         show_level(1)
         show_input(events)
@@ -295,13 +198,8 @@ def game_loop2():
                         else:
                             print("success")
                             del dct[input_word]
-                            # dct[input_word][2]=True
                             current_score= current_score + len(word)
                             word = return_word()
-                            # pygame.draw.rect(window, BLACK, (
-                            # (word_width, word_height), (text_surface.get_width(), text_surface.get_height())))
-                            # text_surface = font.render(word, False, WHITE) # falling words
-
                             word_width = random.randint(50, display_width//1.05)
                             input_word = ""
                             word_height = 0
@@ -309,7 +207,6 @@ def game_loop2():
                             continue
 
         # update window
-
         pygame.display.update()
         for val in dct.values():
             val[1]+=1
@@ -326,26 +223,29 @@ def game_loop2():
                 time.sleep(0.01)
                 pygame.quit()
                 quit()
-        # word_height += 1
-
         time.sleep(0.01)
-
-        # bordery
-
-
         # fps
         clock.tick(200)
 
 def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
+    #selecting the mode
+    if msg=="Learning to Type":
+        time_value=sys.maxsize
+    elif msg=="I can type better than you":
+        time_value=4
+    else:
+        time_value=2
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
+    #mouse click and hover on modes
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         pygame.draw.rect(window, after_hover_color, (x, y, width, height))
         if click[0] == 1 :
-            game_loop2()
+            #starting game if clicked
+            game_loop(time_value)
     else:
         pygame.draw.rect(window, before_hover_color, (x, y, width, height))
-
+    #blitting the modes
     smallText = pygame.font.SysFont("Arial", 30)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((x + (width / 2)), (y + (height / 2)))
@@ -353,6 +253,7 @@ def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
 
 
 def menu_display():
+    #main menu display
     text_surface, text_rec = message("Welcome to the Bunny Type.", 70)
     text_rec.center = (display_width / 2, display_height / 4)
     window.blit(text_surface, text_rec)
@@ -362,7 +263,7 @@ def menu_display():
     pygame.display.flip()
 
 
-def main_menu():
+def game():
     stop=False
     global display_height
     global display_width
@@ -379,7 +280,7 @@ def main_menu():
         menu_display()
 
 if __name__ == '__main__':
-    main_menu()
+    game()
     game_loop()
     pygame.quit()
     quit()
