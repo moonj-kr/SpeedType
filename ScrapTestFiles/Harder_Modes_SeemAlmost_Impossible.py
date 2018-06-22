@@ -143,6 +143,7 @@ def game_loop(time_value):
     rand=word_width
     current_score=0
     word = return_word()
+    #storing in dictionary
     dct={word:[word_width,word_height]}
     a = timeit.default_timer()
     # loop
@@ -151,6 +152,7 @@ def game_loop(time_value):
     while crashed == False:
         events = pygame.event.get()
         b=timeit.default_timer()
+        #to check time
         print(b-a)
         #time difference for new word
         if b-a>=time_value and found==False:
@@ -197,12 +199,14 @@ def game_loop(time_value):
                             quit()
                         else:
                             print("success")
+                            # taking inputted word out of dictionary
                             del dct[input_word]
                             current_score= current_score + len(word)
                             word = return_word()
                             word_width = random.randint(50, display_width//1.05)
                             input_word = ""
                             word_height = 0
+                            # adding to dictionary
                             dct[word]=[word_width,word_height]
                             continue
 
@@ -228,7 +232,7 @@ def game_loop(time_value):
         clock.tick(200)
 
 def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
-    #selecting the mode
+    # selecting the mode
     if msg=="Learning to Type":
         time_value=sys.maxsize
     elif msg=="I can type better than you":
@@ -237,15 +241,15 @@ def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
         time_value=2
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    #mouse click and hover on modes
+    # mouse click and hover on modes
     if x + width > mouse[0] > x and y + height > mouse[1] > y:
         pygame.draw.rect(window, after_hover_color, (x, y, width, height))
         if click[0] == 1 :
-            #starting game if clicked
+            # starting game if clicked
             game_loop(time_value)
     else:
         pygame.draw.rect(window, before_hover_color, (x, y, width, height))
-    #blitting the modes
+    # blitting the modes
     smallText = pygame.font.SysFont("Arial", 30)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((x + (width / 2)), (y + (height / 2)))
@@ -253,7 +257,7 @@ def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
 
 
 def menu_display():
-    #main menu display
+    # main menu display
     text_surface, text_rec = message("Welcome to the Bunny Type.", 70)
     text_rec.center = (display_width / 2, display_height / 4)
     window.blit(text_surface, text_rec)
@@ -281,6 +285,6 @@ def game():
 
 if __name__ == '__main__':
     game()
-    game_loop()
+    # game_loop()
     pygame.quit()
     quit()
