@@ -49,3 +49,12 @@ June 20:
 
 June 23
 - Got caught up with code, will start on fixing stuff later tonight
+
+
+June 27
+    -Even tho flickering is done, there are a fre problems left
+    - SO when I expand the window, the score gets pushed far away.
+    -THis is prolly becuase even tho I divided the display_width, the scale and numbers are different. Hence, it tends to go a bit farther
+    - We need to work on the levels part. like changing speed and stuff
+    - And the location for levels is hard coded.
+    -might have to fix that too
