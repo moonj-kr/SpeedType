@@ -280,7 +280,7 @@ def game():
                 pygame.quit()
                 quit()
             if event.type == pygame.VIDEORESIZE:
-                display_width, display_height = event.w, event.h
+                display_width, display_height = event.w, event.h # DISPLAY CHANGING?
                 pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
         menu_display()
 

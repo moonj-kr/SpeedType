@@ -47,11 +47,6 @@ June 20:
     - Its not perfect yet, but its a good start I think.
     - Need to work with levels functionality now
 
-June 23
-- Got caught up with code, will start on fixing stuff later tonight
-
-
-
 June 27
     -Even tho flickering is done, there are a fre problems left
     - SO when I expand the window, the score gets pushed far away.
@@ -59,3 +54,15 @@ June 27
     - We need to work on the levels part. like changing speed and stuff
     - And the location for levels is hard coded.
     -might have to fix that too
+
+July 2:
+    - Window sizing : play around with position
+    - Level box fix position
+    - Make levels and score functionality
+    - Word falling start position
+    - Theme Decision: pokemon
+            - poke-eggs hatching at the top of screen?
+            - poke-balls catching words
+            - pokemon life levels!! AHHH
+            - pokemon name list instead >> word becomes image
+            - health depletes = die die die - reaper
