@@ -8,7 +8,7 @@ pygame.init()
 
 # variables
 lst = []
-display_width = 1000
+display_width = 1200
 display_height = 800
 w=display_width
 BLACK = (0, 0, 0)
@@ -22,7 +22,8 @@ LAVENDER=(230,230,250)
 SALMON=(220,20,60)
 GREY=(105,105,105)
 
-
+bg= pygame.image.load("bg.png")
+bg=pygame.transform.scale(bg,(display_width,display_height))
 # fn to read file of words
 def read_file():
     file = open("Wordlist.txt", "r")
@@ -81,7 +82,7 @@ def score_Board(value):
     sur,rec=text_objects("Score: ",text)
     rec.center=(display_width/1.25,display_height/19)
     window.blit(sur,rec)
-    pygame.draw.rect(window,WHITE,((display_width/1.2,display_height/26),(70,30)),2)
+    pygame.draw.rect(window,WHITE,((display_width/1.2, display_height/26),(70,30)),2)
     score=pygame.font.SysFont("Arial,20",20)
     sur1,rec1=text_objects(str(value),score)
     rec1.center=(display_width/1.15,display_height/18)
@@ -259,7 +260,8 @@ def mode(msg, x, y, width, height, before_hover_color, after_hover_color):
 
 def menu_display():
     # main menu display
-    text_surface, text_rec = message("Welcome to the Bunny Type.", 70)
+    window.blit(bg,(0,0))
+    text_surface, text_rec = message("Are you the next pokemon master?", 70)
     text_rec.center = (display_width / 2, display_height / 4)
     window.blit(text_surface, text_rec)
     mode("Learning to Type",display_width/4,display_height/1.5,200,70,BLACK,GREY)
@@ -272,6 +274,7 @@ def game():
     stop=False
     global display_height
     global display_width
+    global bg
     while not stop:
         for event in pygame.event.get():
             # window exiting
@@ -282,6 +285,7 @@ def game():
             if event.type == pygame.VIDEORESIZE:
                 display_width, display_height = event.w, event.h # DISPLAY CHANGING?
                 pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
+                bg = pygame.transform.scale(bg, (display_width, display_height))
         menu_display()
 
 if __name__ == '__main__':
