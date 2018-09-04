@@ -82,7 +82,7 @@ def score_Board(value):
     sur,rec=text_objects("Score: ",text)
     rec.center=(display_width/1.25,display_height/19)
     window.blit(sur,rec)
-    pygame.draw.rect(window,WHITE,((display_width/1.2, display_height/26),(70,30)),2)
+    pygame.draw.rect(window,WHITE,((display_width/1.2, display_height/26),(85,30)),2)
     score=pygame.font.SysFont("Arial,20",20)
     sur1,rec1=text_objects(str(value),score)
     rec1.center=(display_width/1.15,display_height/18)
